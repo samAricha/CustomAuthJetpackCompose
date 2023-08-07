@@ -4,8 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AuthResponse(
-    val page: Int? = null,
-    val results: AuthResult,
+    val isSuccessful: Boolean,
+    val result: AuthResult,
     val total_pages: Int,
     val total_results: Int
 )
