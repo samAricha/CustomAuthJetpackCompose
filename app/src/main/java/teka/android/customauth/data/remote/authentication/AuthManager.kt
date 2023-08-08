@@ -5,11 +5,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import teka.android.customauth.data.remote.retrofit.AuthService
 import teka.android.customauth.data.remote.retrofit.models.LoginRequest
+import teka.android.customauth.data.remote.retrofit.models.RegisterRequest
 
 class AuthManager(private val authService: AuthService, private val preferences: SharedPreferences) {
 
-    suspend fun login(username: String, password: String): Boolean {
-        val response = authService.login(LoginRequest(username, password))
+    suspend fun login(email: String, password: String): Boolean {
+        val response = authService.login(LoginRequest(email, password))
+        if (response.isSuccessful) {
+            val token = response.data.accessToken
+            saveAuthToken(token)
+            return true
+        }
+        return false
+    }
+
+    suspend fun register(name: String, email: String, password: String, passwordConfirmation: String): Boolean {
+        val response = authService.registration(RegisterRequest(name, email, password, passwordConfirmation))
         if (response.isSuccessful) {
             val token = response.data.accessToken
             saveAuthToken(token)

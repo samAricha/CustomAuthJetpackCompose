@@ -12,10 +12,6 @@ class LoginViewModel(private val authManager: AuthManager) : ViewModel() {
     private var _isLoggedIn = MutableStateFlow(false)
     val isLoggedIn: StateFlow<Boolean> = _isLoggedIn
 
-
-//    var isLoggedIn: Boolean = authManager.getAuthToken() != null
-//        private set
-
     fun login(email: String, password: String) {
         viewModelScope.launch {
             val success = authManager.login(email, password)

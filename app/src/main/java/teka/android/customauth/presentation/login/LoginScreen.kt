@@ -56,7 +56,6 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
             Button(
                 onClick = {
                     loginViewModel.login(email, password)
-//                    isLoggedInState.value = loginViewModel.isLoggedIn
                 },
                 modifier = Modifier.align(Alignment.End)
             ) {
