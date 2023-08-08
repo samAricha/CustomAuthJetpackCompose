@@ -1,4 +1,4 @@
-package teka.android.organiks_platform_android.data.remote.retrofit
+package teka.android.customauth.data.remote.retrofit
 
 import okhttp3.Interceptor
 

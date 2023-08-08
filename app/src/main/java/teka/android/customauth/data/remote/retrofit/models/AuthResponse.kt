@@ -1,27 +1,36 @@
 package teka.android.customauth.data.remote.retrofit.models
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class AuthResponse(
     val isSuccessful: Boolean,
-    val result: AuthResult,
-    val total_pages: Int,
-    val total_results: Int
+    val message: String?,
+    val data: AuthData
 )
 
 @Serializable
-data class AuthResult(
-   val access_token:String,
-   val token_type:String,
+data class AuthData(
+    val user: User,
+    @SerialName("access_token")
+    val accessToken: String
 )
 
 
-data class Person(
+
+
+
+
+@Serializable
+data class User(
     val id: Int,
     val name: String,
     val email: String,
-    val email_verified_at: String,
-    val created_at: String,
-    val updated_at: String,
+    @SerialName("email_verified_at")
+    val emailVerifiedAt: String?,
+    @SerialName("created_at")
+    val createdAt: String,
+    @SerialName("updated_at")
+    val updatedAt: String
 )

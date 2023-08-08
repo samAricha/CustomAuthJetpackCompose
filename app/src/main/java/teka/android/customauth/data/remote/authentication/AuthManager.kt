@@ -11,11 +11,9 @@ class AuthManager(private val authService: AuthService, private val preferences:
     suspend fun login(username: String, password: String): Boolean {
         val response = authService.login(LoginRequest(username, password))
         if (response.isSuccessful) {
-            val token = response.result.access_token
-            if (token != null) {
-                saveAuthToken(token)
-                return true
-            }
+            val token = response.data.accessToken
+            saveAuthToken(token)
+            return true
         }
         return false
     }

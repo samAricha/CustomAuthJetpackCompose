@@ -6,10 +6,9 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import teka.android.organiks_platform_android.data.remote.retrofit.HeaderInterceptor
 
 object RetrofitProvider {
-    private const val BASE_URL = "https://3b3c-105-161-154-198.ngrok-free.app/api"
+    private const val BASE_URL = "https://4090-41-81-164-18.ngrok-free.app/api/"
 
     private fun provide(): Retrofit {
         val json = Json { ignoreUnknownKeys = true }//to ignore unkown keys
@@ -17,7 +16,9 @@ object RetrofitProvider {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(provideOkhttpClient())
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(json.asConverterFactory(
+                "application/vnd.api+json".toMediaType()
+            ))
             .build()
     }
 

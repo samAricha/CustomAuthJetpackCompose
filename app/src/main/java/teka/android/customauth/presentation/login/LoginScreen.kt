@@ -12,6 +12,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,13 +24,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AuthScreen(authViewModel: LoginViewModel = viewModel()) {
-    var username by remember { mutableStateOf("") }
+fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var isLoggedIn by remember { mutableStateOf(false) }
+    val isLoggedInState = loginViewModel.isLoggedIn.collectAsState()
 
-    if (isLoggedIn) {
-        AuthenticatedContent()
+    if (isLoggedInState.value) {
+        AuthenticatedContent(loginViewModel)
     } else {
         Column(
             modifier = Modifier
@@ -39,9 +40,9 @@ fun AuthScreen(authViewModel: LoginViewModel = viewModel()) {
             verticalArrangement = Arrangement.Center
         ) {
             OutlinedTextField(
-                value = username,
-                onValueChange = { username = it },
-                label = { Text("Username") },
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Email") },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -54,8 +55,8 @@ fun AuthScreen(authViewModel: LoginViewModel = viewModel()) {
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
-                    authViewModel.login(username, password)
-                    isLoggedIn = authViewModel.isLoggedIn
+                    loginViewModel.login(email, password)
+//                    isLoggedInState.value = loginViewModel.isLoggedIn
                 },
                 modifier = Modifier.align(Alignment.End)
             ) {
@@ -67,7 +68,7 @@ fun AuthScreen(authViewModel: LoginViewModel = viewModel()) {
 
 
 @Composable
-fun AuthenticatedContent(authViewModel: LoginViewModel = viewModel()) {
+fun AuthenticatedContent(loginViewModel: LoginViewModel = viewModel()) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -75,7 +76,7 @@ fun AuthenticatedContent(authViewModel: LoginViewModel = viewModel()) {
     ) {
         Text("Authenticated Content")
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { authViewModel.logout() }) {
+        Button(onClick = { loginViewModel.logout() }) {
             Text("Logout")
         }
     }
