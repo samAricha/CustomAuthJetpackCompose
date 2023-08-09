@@ -1,4 +1,4 @@
-package teka.android.customauth.presentation.registration
+package teka.android.customauth.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,10 +7,23 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import teka.android.customauth.data.remote.authentication.AuthManager
 
-class RegisterViewModel(private val authManager: AuthManager) : ViewModel() {
+class AuthViewModel(private val authManager: AuthManager) : ViewModel() {
+
+    private var _isAuthenticated = MutableStateFlow(false)
+    val isAuthenticated: StateFlow<Boolean> = _isAuthenticated
+
+    private var _isLoggedIn = MutableStateFlow(false)
+    val isLoggedIn: StateFlow<Boolean> = _isLoggedIn
 
     private val _isRegistered = MutableStateFlow(false)
     val isRegistered: StateFlow<Boolean> = _isRegistered
+
+    fun login(email: String, password: String) {
+        viewModelScope.launch {
+            val success = authManager.login(email, password)
+            _isLoggedIn.value = success
+        }
+    }
 
     fun register(name: String, email: String, password: String, passwordConfirmation: String) {
         viewModelScope.launch {
@@ -19,5 +32,9 @@ class RegisterViewModel(private val authManager: AuthManager) : ViewModel() {
         }
     }
 
-    // Add other necessary functions or logic related to registration
+    fun logout() {
+        authManager.clearAuthToken()
+        _isAuthenticated.value = false
+    }
+
 }

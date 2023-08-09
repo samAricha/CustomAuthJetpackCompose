@@ -8,10 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import teka.android.customauth.data.remote.authentication.AuthManager
 import teka.android.customauth.data.remote.retrofit.RetrofitProvider
+import teka.android.customauth.presentation.AuthViewModel
+import teka.android.customauth.presentation.home.HomeScreen
 import teka.android.customauth.presentation.login.LoginScreen
-import teka.android.customauth.presentation.login.LoginViewModel
 import teka.android.customauth.presentation.registration.RegisterScreen
-import teka.android.customauth.presentation.registration.RegisterViewModel
 
 @Composable
 fun MainNavGraph(
@@ -21,6 +21,7 @@ fun MainNavGraph(
     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
     val authService = RetrofitProvider.createAuthService()
     val authManager = AuthManager(authService, sharedPreferences)
+    val authViewModel: AuthViewModel = AuthViewModel(authManager)
 
     NavHost(
         navController = navController,
@@ -29,11 +30,15 @@ fun MainNavGraph(
     ) {
 
         composable(route = Screen.LoginScreen.route) {
-            LoginScreen(LoginViewModel(authManager))
+            LoginScreen(authViewModel = authViewModel)
         }
 
         composable(route = Screen.RegistrationScreen.route) {
-            RegisterScreen(RegisterViewModel(authManager))
+            RegisterScreen(authViewModel = authViewModel)
+        }
+
+        composable(route = Screen.HomeScreen.route) {
+            HomeScreen(authViewModel = authViewModel)
         }
 
     }

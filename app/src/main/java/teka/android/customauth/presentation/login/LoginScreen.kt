@@ -20,15 +20,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import teka.android.customauth.presentation.AuthViewModel
+import teka.android.customauth.presentation.home.HomeScreen
 
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
+fun LoginScreen(authViewModel: AuthViewModel = viewModel()) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    val isLoggedInState = loginViewModel.isLoggedIn.collectAsState()
+    val isLoggedInState = authViewModel.isLoggedIn.collectAsState()
 
     if (isLoggedInState.value) {
-        AuthenticatedContent(loginViewModel)
+        HomeScreen(authViewModel)
     } else {
         Column(
             modifier = Modifier
@@ -53,7 +55,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
-                    loginViewModel.login(email, password)
+                    authViewModel.login(email, password)
                 },
                 modifier = Modifier.align(Alignment.End)
             ) {
@@ -64,17 +66,3 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
 }
 
 
-@Composable
-fun AuthenticatedContent(loginViewModel: LoginViewModel = viewModel()) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("Authenticated Content")
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { loginViewModel.logout() }) {
-            Text("Logout")
-        }
-    }
-}

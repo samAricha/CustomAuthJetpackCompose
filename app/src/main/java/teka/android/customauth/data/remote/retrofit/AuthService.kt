@@ -10,7 +10,7 @@ import teka.android.customauth.data.remote.retrofit.models.User
 
 interface AuthService {
 
-    @POST("registration")
+    @POST("register")
     suspend fun registration(
         @Body registerRequest: RegisterRequest
     ): AuthResponse

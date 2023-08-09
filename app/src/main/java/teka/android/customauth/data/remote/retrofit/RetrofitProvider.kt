@@ -8,7 +8,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 object RetrofitProvider {
-    private const val BASE_URL = "https://4090-41-81-164-18.ngrok-free.app/api/"
+    private const val BASE_URL = "https://fd61-41-89-128-5.ngrok-free.app/api/"
 
     private fun provide(): Retrofit {
         val json = Json { ignoreUnknownKeys = true }//to ignore unkown keys

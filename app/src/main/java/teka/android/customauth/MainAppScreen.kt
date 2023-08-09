@@ -2,16 +2,12 @@ package teka.android.customauth
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.preference.PreferenceManager
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -26,12 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import teka.android.customauth.data.remote.authentication.AuthManager
-import teka.android.customauth.data.remote.retrofit.RetrofitProvider
 import teka.android.customauth.navigation.MainNavGraph
 import teka.android.customauth.navigation.Screen
-import teka.android.customauth.presentation.login.LoginScreen
-import teka.android.customauth.presentation.login.LoginViewModel
 import teka.android.customauth.ui.theme.Purple80
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedMaterialScaffoldPaddingParameter")

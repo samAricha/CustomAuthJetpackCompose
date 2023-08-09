@@ -27,8 +27,6 @@ data class User(
     val id: Int,
     val name: String,
     val email: String,
-    @SerialName("email_verified_at")
-    val emailVerifiedAt: String?,
     @SerialName("created_at")
     val createdAt: String,
     @SerialName("updated_at")
