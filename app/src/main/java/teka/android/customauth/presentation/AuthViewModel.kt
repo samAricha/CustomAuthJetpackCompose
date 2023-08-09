@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import teka.android.customauth.data.remote.authentication.AuthManager
+import teka.android.customauth.authentication.AuthManager
 
 class AuthViewModel(private val authManager: AuthManager) : ViewModel() {
 
@@ -33,8 +33,11 @@ class AuthViewModel(private val authManager: AuthManager) : ViewModel() {
     }
 
     fun logout() {
-        authManager.clearAuthToken()
-        _isAuthenticated.value = false
+        viewModelScope.launch {
+            authManager.clearAuthToken()
+            _isAuthenticated.value = false
+        }
+
     }
 
 }

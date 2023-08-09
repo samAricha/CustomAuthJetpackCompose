@@ -1,13 +1,17 @@
-package teka.android.customauth.data.remote.authentication
+package teka.android.customauth.authentication
 
-import android.content.SharedPreferences
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
+import teka.android.customauth.MyDataStoreRepository
 import teka.android.customauth.data.remote.retrofit.AuthService
 import teka.android.customauth.data.remote.retrofit.models.LoginRequest
 import teka.android.customauth.data.remote.retrofit.models.RegisterRequest
 
-class AuthManager(private val authService: AuthService, private val preferences: SharedPreferences) {
+class AuthManager(private val authService: AuthService,
+                  private val dataStoreRepository: MyDataStoreRepository
+) {
+
 
     suspend fun login(email: String, password: String): Boolean {
         val response = authService.login(LoginRequest(email, password))
@@ -30,14 +34,14 @@ class AuthManager(private val authService: AuthService, private val preferences:
     }
 
     private suspend fun saveAuthToken(token: String) = withContext(Dispatchers.IO) {
-        preferences.edit().putString("auth_token", token).apply()
+        dataStoreRepository.saveToken(token)
     }
 
-    fun getAuthToken(): String? {
-        return preferences.getString("auth_token", null)
+    suspend fun getAuthToken(): String {
+        return dataStoreRepository.getAccessToken.first()
     }
 
-    fun clearAuthToken() {
-        preferences.edit().remove("auth_token").apply()
+    suspend fun clearAuthToken() {
+        dataStoreRepository.saveToken("")
     }
 }

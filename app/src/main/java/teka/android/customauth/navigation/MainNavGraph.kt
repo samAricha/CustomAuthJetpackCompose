@@ -1,12 +1,11 @@
 package teka.android.customauth.navigation
 
-import android.content.Context
-import android.preference.PreferenceManager
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import teka.android.customauth.data.remote.authentication.AuthManager
+import teka.android.customauth.MyDataStoreRepository
+import teka.android.customauth.authentication.AuthManager
 import teka.android.customauth.data.remote.retrofit.RetrofitProvider
 import teka.android.customauth.presentation.AuthViewModel
 import teka.android.customauth.presentation.home.HomeScreen
@@ -16,12 +15,11 @@ import teka.android.customauth.presentation.registration.RegisterScreen
 @Composable
 fun MainNavGraph(
     navController: NavHostController,
-    applicationContext: Context
+    dataStoreRepository: MyDataStoreRepository
 ) {
-    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
     val authService = RetrofitProvider.createAuthService()
-    val authManager = AuthManager(authService, sharedPreferences)
-    val authViewModel: AuthViewModel = AuthViewModel(authManager)
+    val authManager = AuthManager(authService, dataStoreRepository)
+    val authViewModel = AuthViewModel(authManager)
 
     NavHost(
         navController = navController,

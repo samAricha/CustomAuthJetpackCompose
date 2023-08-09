@@ -7,29 +7,25 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import teka.android.customauth.authentication.AuthManager
+import teka.android.customauth.data.remote.retrofit.RetrofitProvider
+import teka.android.customauth.presentation.AuthViewModel
 import teka.android.customauth.ui.theme.CustomAuthTheme
 
 class MainActivity : ComponentActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             CustomAuthTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
 
-//                    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-//                    val authService = RetrofitProvider.createAuthService()
-//                    val authManager = AuthManager(authService, sharedPreferences)
-//                    LoginScreen(LoginViewModel(authManager))
+                    val myDataStoreRepository = MyDataStoreRepository(applicationContext)
 
-
-
-                    MainAppScreen(applicationContext)
+                    MainAppScreen(myDataStoreRepository)
                 }
             }
         }

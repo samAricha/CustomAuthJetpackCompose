@@ -1,6 +1,7 @@
 package teka.android.customauth
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Context
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,7 +29,7 @@ import teka.android.customauth.ui.theme.Purple80
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MainAppScreen(applicationContext: Context) {
+fun MainAppScreen(dataStoreRepository: MyDataStoreRepository) {
     val navController = rememberNavController()
 
     Scaffold(
@@ -39,7 +40,7 @@ fun MainAppScreen(applicationContext: Context) {
     ){
 
         Box(modifier = Modifier.padding(bottom = 60.dp)) {
-            MainNavGraph(navController = navController, applicationContext = applicationContext)
+            MainNavGraph(navController = navController, dataStoreRepository)
         }
 
     }
